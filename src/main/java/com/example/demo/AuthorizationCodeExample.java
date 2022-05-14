@@ -17,7 +17,7 @@ public class AuthorizationCodeExample {
     private static final String clientId = "9c06a16a8f1c4697b70dd07338df8622";
     private static final String clientSecret = "25f810718fcf4167ae4591922eba0810";
     private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080");
-    private static final String code = "AQBsqoKfflXJpeBBYGVZTvF48__JhbYR9afKbwPOqeact5GVSAoanE4M3DxVqllTasIeTl1VdO-cCRaGfZfvk2S0GSjxWl3yzUM5jpr74w9ordeJYNaCe-0_nP3JkYvc5Fkr4QjZ4eyXYgeJmuRA6b52A0E6cY-v4GZFdSTqwqRMdKvb79NaJNNy-qMKXZLgBqMuJ2YTejvoDmRyxgSWcvbXnb_rhi7hqCs3RHGg8fHeUl3tuYsr_ka9FZM1ShzgLiVf14kNQhRRKb8XVm9wb7YVmK1bKxontAdc7W1x2Vzkn195c-StwkDBdXXI8PTtiQs";
+    private static final String code = "AQAd6rgtJhP_V7g1CTEDrpCluLtKn0KsYRI3d7nkVIXFED1X7D2_LUvJI8A32tEOB4EjmvNLdId86ivYpbKZXNqZb35kCvB4R8GiHoUf_wzMMIiaepX6S75OgWO-9tH0UqcFXx-KJ7iH_dk23mOGkicUoCt3r9K0QjKxYHOlTrWulG_wjk_ifNJd826IffkYuMA_OTE87CJhxLwhokHZlG4vLDarKiWkcL-WLhp-F1nBgPFa9EnXOtjLPHzqSZKhhN2Ja5sTGOKo62a9Ahm7A4tIJ1QTrDgrB0qEhncCZBP5I3D1oFlz9PrqrNcfVvqbGYs";
 
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientId)
