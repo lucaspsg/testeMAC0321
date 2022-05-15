@@ -28,7 +28,7 @@ public class AuthController {
     private static final String clientSecret = "25f810718fcf4167ae4591922eba0810";
     private String code = "";
 
-    private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
+    public static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientId)
             .setClientSecret(clientSecret)
             .setRedirectUri(redirectUri)
@@ -39,7 +39,7 @@ public class AuthController {
     @ResponseBody
     public String spotifyLogin(){
         AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
-//                .scope("app-remote-control,playlist-read-collaborative,playlist-modify-public,playlist-read-private,playlist-modify-private,user-read-private,user-read-mail,user-top-read")
+                .scope("playlist-read-collaborative, playlist-modify-public, playlist-read-private, playlist-modify-private, user-read-email, user-read-private")
                 .show_dialog(true)
                 .build();
 
@@ -64,23 +64,8 @@ public class AuthController {
             System.out.println("Error : " + e.getMessage() );
         }
 
-//        response.sendRedirect("http://localhost:3000");
+        response.sendRedirect("http://localhost:3000/home");
         return spotifyApi.getAccessToken();
-    }
-
-
-    @GetMapping("user")
-    public static void getCurrentUsersProfile_Sync() {
-        GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile()
-                .build();
-        try {
-            final User user = getCurrentUsersProfileRequest.execute();
-            System.out.println(user);
-
-            System.out.println("Display name: " + user.getDisplayName());
-        } catch (IOException | SpotifyWebApiException | ParseException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
     }
 
     public static void main(String[] args) {
