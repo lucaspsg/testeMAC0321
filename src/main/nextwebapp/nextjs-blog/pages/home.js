@@ -1,8 +1,9 @@
 import Head from "next/head";
 import { useState, setState, useEffect } from "react";
 
-export default function Home() {
+export default function Home(props) {
   const [playlists, setPlaylists] = useState();
+  const [musicas, setMusicas] = useState();
 
   useEffect(() => {
     fetch("http://localhost:8080/playlists")
@@ -25,14 +26,40 @@ export default function Home() {
 
         {playlists?.map((playlist) => {
           return (
-            <button className="grid">
-              <a href="https://localhost:8080/api/login" className="card">
-                <h3 key={playlist.name}>{playlist.name};</h3>
-              </a>
+            <button
+              key={playlist.id}
+              className="grid"
+              onClick={() => {
+                fetch(`http://localhost:8080/playlist-items/${playlist.id}`)
+                  .then((response) => response.json())
+                  .then((data) => {
+                    console.log(data);
+                    setMusicas(data);
+                  });
+              }}
+            >
+              <h3 key={playlist.name} className="card">
+                {playlist.name};
+              </h3>
             </button>
           );
         })}
+        <button className="grid">
+          <a href="https://localhost:8080/api/login" className="card">
+            <h3>Criar Playlist</h3>
+          </a>
+        </button>
       </main>
+      <div className="itemsHeader">
+        <h2>Musicas da playlist selecionada</h2>
+        {musicas?.map((musica) => {
+          return (
+            <p>
+              {musica.track.name} - {musica.track.album.artists[0].name}
+            </p>
+          );
+        })}
+      </div>
 
       <footer>
         <a
@@ -112,6 +139,12 @@ export default function Home() {
         .description {
           line-height: 1.5;
           font-size: 1.5rem;
+        }
+
+        .itemsHeader {
+          position: absolute;
+          top: 80px;
+          right: 400px;
         }
 
         code {

@@ -5,13 +5,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
-import se.michaelthelin.spotify.model_objects.specification.Paging;
-import se.michaelthelin.spotify.model_objects.specification.PlaylistSimplified;
-import se.michaelthelin.spotify.model_objects.specification.User;
+import se.michaelthelin.spotify.model_objects.specification.*;
 import se.michaelthelin.spotify.requests.data.playlists.GetListOfCurrentUsersPlaylistsRequest;
+import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
 import se.michaelthelin.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 
 import java.io.IOException;
@@ -60,5 +60,25 @@ public class GerenciadorMusical {
         }
 
         return new PlaylistSimplified[0];
+    }
+
+    @GetMapping("playlist-items/{id}")
+    @CrossOrigin
+    public PlaylistTrack[] getPlaylistsItems_Sync(@PathVariable("id") String playlistId) {
+            GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi
+                .getPlaylistsItems(playlistId)
+//          .fields("description")
+//          .limit(10)
+//          .offset(0)
+//          .market(CountryCode.SE)
+//          .additionalTypes("track,episode")
+                .build();
+        try {
+            final Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsItemsRequest.execute();
+            return playlistTrackPaging.getItems();
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new PlaylistTrack[0];
     }
 }
