@@ -50,7 +50,6 @@ public class AuthController {
     @GetMapping("get-user-code")
     public String getSpotifyUserCode(@RequestParam("code") String userCode, HttpServletResponse response) throws IOException{
         code = userCode;
-        System.out.println(code);
         AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code).build();
 
         try{

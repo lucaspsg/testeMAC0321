@@ -1,9 +1,19 @@
 import Head from "next/head";
 import { useState, setState, useEffect } from "react";
+import axios from "axios";
 
 export default function Home(props) {
   const [playlists, setPlaylists] = useState();
   const [musicas, setMusicas] = useState();
+  const [nomePlaylist, setNomePlaylist] = useState();
+  const [busca, setBusca] = useState();
+  const [buscaResultado, setBuscaResultado] = useState();
+  const [playlistId, setPlaylistId] = useState();
+  const [escondido, setEscondido] = useState(true);
+
+  let userId = "";
+
+  
 
   useEffect(() => {
     fetch("http://localhost:8080/playlists")
@@ -12,6 +22,7 @@ export default function Home(props) {
         console.log(data);
         setPlaylists(data);
       });
+      fetch("http://localhost:8080/home");
   }, []);
 
   return (
@@ -28,36 +39,82 @@ export default function Home(props) {
           return (
             <button
               key={playlist.id}
-              className="grid"
+              className="card"
               onClick={() => {
                 fetch(`http://localhost:8080/playlist-items/${playlist.id}`)
                   .then((response) => response.json())
                   .then((data) => {
                     console.log(data);
                     setMusicas(data);
+                    setPlaylistId(playlist.id);
+                    console.log(playlistId);
+                    setEscondido(false);
                   });
               }}
             >
-              <h3 key={playlist.name} className="card">
+              <h3 key={playlist.name}>
                 {playlist.name};
               </h3>
             </button>
           );
         })}
-        <button className="grid">
-          <a href="https://localhost:8080/api/login" className="card">
-            <h3>Criar Playlist</h3>
-          </a>
-        </button>
+        <div className="card">
+          <h3>Criar Playlist</h3>
+          <form>
+            <input type="text" onChange={(e) => {
+              setNomePlaylist(e.target.value);
+              console.log(nomePlaylist);
+            }}/>
+          </form>
+          <button onClick={() => {
+          fetch(`http://localhost:8080/create-playlist/${nomePlaylist}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setPlaylists([...playlists, data]);
+          });
+        }}>buscar</button>
+        </div>
       </main>
       <div className="itemsHeader">
         <h2>Musicas da playlist selecionada</h2>
         {musicas?.map((musica) => {
           return (
-            <p>
-              {musica.track.name} - {musica.track.album.artists[0].name}
-            </p>
+          <div key={musica.id}>
+              <p>
+                {musica.track.name} - {musica.track.album.artists[0].name}
+              </p>
+              <button onClick={() => {
+                fetch(`http://localhost:8080/remove-playlist-items/${playlistId}/${musica.track.uri}`, { mode: 'no-cors'});
+                console.log(`http://localhost:8080/remove-playlist-items/${playlistId}/${musica.track.uri}`);
+              }}>remover</button>
+          </div>
           );
+        })}
+      </div>
+      <div className="buscarMusica" hidden={escondido}>
+        <h3>Buscar musica</h3>
+        <form>
+          <input type="text" onChange={(e) => {
+            setBusca(e.target.value);
+            console.log(busca);
+          }}/>
+        </form>
+        <button onClick={() => {
+          fetch(`http://localhost:8080/search/${busca}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setBuscaResultado(data)
+          });
+        }}>buscar</button>
+        {buscaResultado?.map((musica)  => {
+          return (
+            <div key={musica.id}>
+          <p>{musica.name} - {musica.artists[0].name}</p>
+          <button onClick={() => {
+                fetch(`http://localhost:8080/add-playlist-items/${playlistId}/${musica.uri}`, { mode: 'no-cors'});
+              }}>adicionar</button>
+          </div>
+          )
         })}
       </div>
 
@@ -144,7 +201,14 @@ export default function Home(props) {
         .itemsHeader {
           position: absolute;
           top: 80px;
-          right: 400px;
+          right: 200px;
+        }
+
+        .buscarMusica{
+          position: absolute;
+          top: 500px;
+          right: 200px;
+          height: 500px;
         }
 
         code {

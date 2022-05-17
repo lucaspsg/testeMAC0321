@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function Home() {
+export default function Login() {
   return (
     <div className="container">
       <Head>
@@ -23,10 +23,10 @@ export default function Home() {
               });
           }}
         >
-          <a href="https://localhost:8080/api/login" className="card">
+          <div className="card">
             <h3>Fazer login &rarr;</h3>
             <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          </div>
         </button>
       </main>
 
