@@ -11,7 +11,7 @@ export default function Home(props) {
   const [playlistId, setPlaylistId] = useState();
   const [escondido, setEscondido] = useState(true);
 
-  let userId = "";
+  let userId = " ";
 
   
 
