@@ -19,7 +19,6 @@ export default function Home(props) {
     fetch("http://localhost:8080/playlists")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setPlaylists(data);
       });
       fetch("http://localhost:8080/home");
@@ -44,10 +43,8 @@ export default function Home(props) {
                 fetch(`http://localhost:8080/playlist-items/${playlist.id}`)
                   .then((response) => response.json())
                   .then((data) => {
-                    console.log(data);
                     setMusicas(data);
                     setPlaylistId(playlist.id);
-                    console.log(playlistId);
                     setEscondido(false);
                   });
               }}
@@ -63,7 +60,6 @@ export default function Home(props) {
           <form>
             <input type="text" onChange={(e) => {
               setNomePlaylist(e.target.value);
-              console.log(nomePlaylist);
             }}/>
           </form>
           <button onClick={() => {
@@ -85,7 +81,6 @@ export default function Home(props) {
               </p>
               <button onClick={() => {
                 fetch(`http://localhost:8080/remove-playlist-items/${playlistId}/${musica.track.uri}`, { mode: 'no-cors'});
-                console.log(`http://localhost:8080/remove-playlist-items/${playlistId}/${musica.track.uri}`);
               }}>remover</button>
           </div>
           );
@@ -95,7 +90,6 @@ export default function Home(props) {
         <form>
           <input type="text" onChange={(e) => {
             setBusca(e.target.value);
-            console.log(busca);
           }}/>
         </form>
         <button onClick={() => {
