@@ -25,7 +25,7 @@ public class GerenciadorMusical {
     String userId= "";
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(GerenciadorMusical.class, args);
     }
     @CrossOrigin
     @GetMapping("home")

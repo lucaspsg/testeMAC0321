@@ -4,13 +4,13 @@ export default function Login() {
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Gerenciador Musical</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Projetão MAC0321</a>
+          Bem-vindo ao <a href="https://nextjs.org">Projetão MAC0321</a>
         </h1>
 
         <button
@@ -25,7 +25,6 @@ export default function Login() {
         >
           <div className="card">
             <h3>Fazer login &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
           </div>
         </button>
       </main>
