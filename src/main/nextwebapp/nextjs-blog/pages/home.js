@@ -90,8 +90,7 @@ export default function Home(props) {
           </div>
           );
         })}
-      </div>
-      <div className="buscarMusica" hidden={escondido}>
+        <div className="buscarMusica" hidden={escondido}>
         <h3>Buscar musica</h3>
         <form>
           <input type="text" onChange={(e) => {
@@ -116,6 +115,7 @@ export default function Home(props) {
           </div>
           )
         })}
+      </div>
       </div>
 
       <footer>
@@ -205,9 +205,6 @@ export default function Home(props) {
         }
 
         .buscarMusica{
-          position: absolute;
-          top: 500px;
-          right: 200px;
           height: 500px;
         }
 

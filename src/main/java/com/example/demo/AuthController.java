@@ -18,7 +18,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 
-@SpringBootApplication
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -65,9 +64,5 @@ public class AuthController {
 
         response.sendRedirect("http://localhost:3000/home");
         return spotifyApi.getAccessToken();
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
     }
 }
